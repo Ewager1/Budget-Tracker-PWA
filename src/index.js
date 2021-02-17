@@ -1,3 +1,10 @@
+// Create a function that sends name, value, date to indexxedDb 
+//in button logic on indexjs page, create an if offline wrapper, then add indexxedDb function, else query mongo 
+
+
+//create whenOnline event listener that takes info from indexxedb, makes a post request to mongo, then empties 
+console.log('test')
+
 let transactions = [];
 let myChart;
 
@@ -8,44 +15,12 @@ fetch("/api/transaction")
   .then((data) => {
     // save db data on global variable
     transactions = data;
-    savetoIndexDb(transactions); 
+
     populateTotal();
     populateTable();
     populateChart();
     console;
   })
-
-function savetoIndexDb(transactions){
-
-//open index connection  
-  const request = indexedDB.open("budget", 1);
-
-// Create schema
-request.onupgradeneeded = event => {
-  const db = event.target.result;
-
-  // Create object store and keypath 
-  const budgetStore = db.createObjectStore("budgetStore", {
-    keyPath: "budgetId", autoIncrement:true
-  });
-  // allow name to be indexed.
-  budgetStore.createIndex("name", "name");
-};
-
-// Opens a transaction, accesses the budget objectStore.
-request.onsuccess = () => {
-  const db = request.result;
-  const transaction = db.transaction(["budgetStore"], "readwrite");
-  const budgetStore = transaction.objectStore("budgetStore");
- 
-  
-  //add each transaction to budgetStore indexxeddb
-  transactions.map(transaction => {
-  budgetStore.add({_id: transaction._id, name: transaction.name, value: transaction.value, date: transaction.date, __v: transaction.__v });
- 
-  })
-}
-}
 
 function populateTotal() {
   // reduce transaction amounts to a single total value
@@ -170,7 +145,6 @@ function sendTransaction(isAdding) {
     .catch((err) => {
       // fetch failed, so save in indexed db
       saveRecord(transaction);
-      console.log(transaction)
 
       // clear form
       nameEl.value = "";
@@ -186,8 +160,37 @@ document.querySelector("#sub-btn").onclick = function () {
   sendTransaction(false);
 };
 
-function saveRecord(transaction) {
-  console.log(transaction);
-}
+function saveRecord(budgetTransaction) {
+  const request = indexedDB.open("budget", 1);
+
+  // Create schema
+  request.onupgradeneeded = (event) => {
+    const db = event.target.result;
+
+    // Create object store and keypath
+    const budgetStore = db.createObjectStore("budgetStore", {
+      keyPath: "budgetId",
+      autoIncrement: true,
+    });
+    // allow name to be indexed.
+    budgetStore.createIndex("name", "name");
+  };
+
+  // Opens a transaction, accesses the budget objectStore.
+  request.onsuccess = () => {
+    const db = request.result;
+    const transaction = db.transaction(["budgetStore"], "readwrite");
+    const budgetStore = transaction.objectStore("budgetStore");
+    console.log(budgetTransaction)
+    //add each transaction to budgetStore indexxeddb
+      budgetStore.add({
+        name: budgetTransaction.name,
+        value: budgetTransaction.value,
+        date: budgetTransaction.date,
+    });
+  };
+};
+
+
 
 
