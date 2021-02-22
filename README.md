@@ -1,3 +1,7 @@
 # Budget-Tracker-PWA
 
-A budget tracker that caches data and will work offline
+## Description
+
+A budget tracker that utilizes service workers and indexxed DB to work offline. When the user goes offline,
+a cached version of the site is rendered and indexxedDB holds any changes. When the user comes back online,
+the data from indexxed DB updated to the database seemlessly.
