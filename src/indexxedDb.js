@@ -1,4 +1,4 @@
-function savetoIndexDb(transactions) {
+
   //open index connection
   const request = indexedDB.open("budget", 1);
 
@@ -32,4 +32,4 @@ function savetoIndexDb(transactions) {
       });
     });
   };
-};
+

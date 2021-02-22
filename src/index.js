@@ -1,12 +1,12 @@
-// Create a function that sends name, value, date to indexxedDb 
-//in button logic on indexjs page, create an if offline wrapper, then add indexxedDb function, else query mongo 
-
-
-//create whenOnline event listener that takes info from indexxedb, makes a post request to mongo, then empties 
-console.log('test')
+//get mongoDB Post request to work
+// get dist folder to work
+//add manifest webpack plugin
 
 let transactions = [];
 let myChart;
+
+//if Online, send indexxed db data to mongodb, then empty indexxedb
+window.addEventListener("online", updateMongoDb);
 
 fetch("/api/transaction")
   .then((response) => {
@@ -20,7 +20,7 @@ fetch("/api/transaction")
     populateTable();
     populateChart();
     console;
-  })
+  });
 
 function populateTotal() {
   // reduce transaction amounts to a single total value
@@ -181,16 +181,43 @@ function saveRecord(budgetTransaction) {
     const db = request.result;
     const transaction = db.transaction(["budgetStore"], "readwrite");
     const budgetStore = transaction.objectStore("budgetStore");
-    console.log(budgetTransaction)
     //add each transaction to budgetStore indexxeddb
-      budgetStore.add({
-        name: budgetTransaction.name,
-        value: budgetTransaction.value,
-        date: budgetTransaction.date,
+    budgetStore.add({
+      name: budgetTransaction.name,
+      value: budgetTransaction.value,
+      date: budgetTransaction.date,
     });
   };
-};
+}
 
+//
+function updateMongoDb() {
+  //open index connection
+  const request = indexedDB.open("budget", 1);
 
+  // Opens a transaction, accesses the budget objectStore.
+  request.onsuccess = () => {
+    const db = request.result;
+    const transaction = db.transaction(["budgetStore"], "readwrite");
+    const budgetStore = transaction.objectStore("budgetStore");
+    const grabAll = budgetStore.getAll();
 
+    grabAll.onsuccess = function (event) {
+      let answer = grabAll.result;
+
+      
+      budgetStore.clear()
+
+      fetch("/api/transaction/bulk", {
+        method: "POST",
+        body: JSON.stringify(answer),
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+      });
+      
+      };
+    };
+  };
 
