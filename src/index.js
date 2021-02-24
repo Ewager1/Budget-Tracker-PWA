@@ -7,7 +7,7 @@ let myChart;
 
 //creates objectStore for indexxedDb if it does not exist
 
-const request = indexedDB.open("budget", 1);
+const request = indexedDB.open("budget", 2);
 
 // Create schema
 request.onupgradeneeded = (event) => {
