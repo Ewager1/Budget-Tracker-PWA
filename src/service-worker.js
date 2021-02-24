@@ -2,8 +2,8 @@ const FILES_TO_CACHE = [
   "/",
   "./index.html",
   "./styles.css",
-  "./dist/icons/icon_192x192.4052450372b804e8bab9e59e8ae25faa.png",
-  "./dist/icons/icon_512x512.a8d33cecbeef5400701959e272e1e041.png",
+  "./icons/icon-192x192.png",
+  "./icons/icon-512x512.png",
   "./index.js",
 ];
 
