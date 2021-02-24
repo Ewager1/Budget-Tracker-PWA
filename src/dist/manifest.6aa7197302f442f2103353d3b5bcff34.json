@@ -1,0 +1,23 @@
+{
+  "icons": [
+    {
+      "src": "./icons/icon_192x192.4052450372b804e8bab9e59e8ae25faa.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/icon_192x192.4052450372b804e8bab9e59e8ae25faa.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Budget Tracker",
+  "short_name": "BT",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": "/",
+  "description": "An app that tracks financial transaction online and offline.",
+  "background_color": "#01579b",
+  "theme_color": "#000000",
+  "theme-color": "#ffffff"
+}
