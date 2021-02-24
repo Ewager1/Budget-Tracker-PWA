@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "scripts": {  "heroku-prebuild": "npm install --dev",
+  "scripts": {
+    "heroku-prebuild": "npm install --dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "build": "webpack"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "lite-server": "^2.5.3",
     "mongoose": "^5.5.15",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.7"
-  },
-  "devDependencies": {}
+    "nodemon": "^2.0.7",
+    "webpack": "^5.24.1"
+  }
 }
