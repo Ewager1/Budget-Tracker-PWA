@@ -6,22 +6,21 @@ let transactions = [];
 let myChart;
 
 //creates objectStore for indexxedDb if it does not exist
-function createRecordIfNoRecord() {
-  const request = indexedDB.open("budget", 1);
 
-  // Create schema
-  request.onupgradeneeded = (event) => {
-    const db = event.target.result;
+const request = indexedDB.open("budget", 1);
 
-    // Create object store and keypath
-    const budgetStore = db.createObjectStore("budgetStore", {
-      keyPath: "budgetId",
-      autoIncrement: true,
-    });
-    // allow name to be indexed.
-    budgetStore.createIndex("name", "name");
-  };
-} 
+// Create schema
+request.onupgradeneeded = (event) => {
+  const db = event.target.result;
+
+  // Create object store and keypath
+  const budgetStore = db.createObjectStore("budgetStore", {
+    keyPath: "budgetId",
+    autoIncrement: true,
+  });
+  // allow name to be indexed.
+  budgetStore.createIndex("name", "name");
+};
 
 //if Online, send indexxed db data to mongodb, then empty indexxedb
 window.addEventListener("online", updateMongoDb);
@@ -149,7 +148,6 @@ function sendTransaction(isAdding) {
     },
   })
     .then((response) => {
-      
       return response.json();
     })
     .then((data) => {
@@ -211,7 +209,7 @@ function saveRecord(budgetTransaction) {
 
 //
 function updateMongoDb() {
-  console.log('I work')
+  console.log("I work");
   //open index connection
   const request = indexedDB.open("budget", 1);
 
@@ -225,8 +223,7 @@ function updateMongoDb() {
     grabAll.onsuccess = function (event) {
       let answer = grabAll.result;
 
-      
-      budgetStore.clear()
+      budgetStore.clear();
 
       fetch("/api/transaction/bulk", {
         method: "POST",
@@ -236,8 +233,6 @@ function updateMongoDb() {
           "Content-Type": "application/json",
         },
       });
-      
-      };
     };
   };
-
+}
