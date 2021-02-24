@@ -13,7 +13,7 @@ app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//changed this for webpack 
+//changed this for webpack
 app.use(express.static("src"));
 
 mongoose.connect("mongodb://localhost/budget", {
@@ -24,7 +24,6 @@ mongoose.connect("mongodb://localhost/budget", {
 // routes
 app.use(require("./routes/api.js"));
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
-
