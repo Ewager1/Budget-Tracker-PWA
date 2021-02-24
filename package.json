@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "scripts": {
+  "scripts": {  "heroku-prebuild": "npm install --dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "build": "webpack"
@@ -26,7 +26,5 @@
     "morgan": "^1.9.1",
     "nodemon": "^2.0.7"
   },
-  "devDependencies": {
-    "html-loader": "^1.3.2"
-  }
+  "devDependencies": {}
 }
