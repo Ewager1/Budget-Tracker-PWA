@@ -18,3 +18,8 @@ the data from indexxed DB updated to the database seemlessly.
 - heroku 
 - atlas 
 
+## My Info
+
+-[My Github ](https://github.com/Ewager1)
+
+-[My Portfolio](https://ewager1.github.io/gitPortfolio/)
