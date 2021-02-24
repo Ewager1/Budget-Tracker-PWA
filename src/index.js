@@ -1,9 +1,15 @@
-//get mongoDB Post request to work
-// get dist folder to work
-//add manifest webpack plugin
-
 let transactions = [];
 let myChart;
+
+//create object store if not created
+
+// Create object store and keypath
+const budgetStore = db.createObjectStore("budgetStore", {
+  keyPath: "budgetId",
+  autoIncrement: true,
+});
+// allow name to be indexed.
+budgetStore.createIndex("name", "name");
 
 //if Online, send indexxed db data to mongodb, then empty indexxedb
 window.addEventListener("online", updateMongoDb);
@@ -122,6 +128,7 @@ function sendTransaction(isAdding) {
   populateTotal();
 
   // also send to server
+
   fetch("/api/transaction", {
     method: "POST",
     body: JSON.stringify(transaction),
@@ -205,8 +212,7 @@ function updateMongoDb() {
     grabAll.onsuccess = function (event) {
       let answer = grabAll.result;
 
-      
-      budgetStore.clear()
+      budgetStore.clear();
 
       fetch("/api/transaction/bulk", {
         method: "POST",
@@ -216,8 +222,6 @@ function updateMongoDb() {
           "Content-Type": "application/json",
         },
       });
-      
-      };
     };
   };
-
+}
